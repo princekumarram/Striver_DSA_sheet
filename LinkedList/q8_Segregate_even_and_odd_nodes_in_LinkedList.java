@@ -1,5 +1,7 @@
+
 import java.util.ArrayList;
 
+/*
 class Node {
     int val;
     Node next;
@@ -78,5 +80,85 @@ public class q8_Segregate_even_and_odd_nodes_in_LinkedList {
 
         System.out.println("LinkedList After Segregation ");
         PrintList(newHead);
+    }
+}
+
+ */
+
+import java.util.*;
+
+class Node {
+
+    int data;
+
+    Node next;
+
+    // Constructor with both data and
+    // next node as parameters
+    Node(int data1, Node next1) {
+        data = data1;
+        next = next1;
+    }
+
+    // Constructor with only data as a
+    // parameter, sets next to null
+    Node(int data1) {
+        data = data1;
+        next = null;
+    }
+}
+
+public class q8_Segregate_even_and_odd_nodes_in_LinkedList {
+
+    public static Node Segregation1(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        Node odd = head;
+        Node even = head.next;
+        Node evenHead = head.next;
+
+        while (even != null && even.next != null) {
+            odd.next = odd.next.next;
+            even.next = even.next.next;
+
+            odd = odd.next;
+            even = even.next;
+
+        }
+
+        odd.next = evenHead;
+        return head;
+
+    }
+
+    // Function to print the linked list
+    public static void printLinkedList(Node head) {
+        Node temp = head;
+        while (temp != null) {
+            // Print the data of the current node
+            System.out.print(temp.data + " ");
+            // Move to the next node
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        // Linked List: 3 2 5 4 1
+        Node head = new Node(3);
+        head.next = new Node(2);
+        head.next.next = new Node(5);
+        head.next.next.next = new Node(4);
+        head.next.next.next.next = new Node(1);
+
+        System.out.print("Original Linked List: ");
+        printLinkedList(head);
+
+        // methode-2
+        head = Segregation1(head);
+
+        System.out.print("After the segregation: ");
+        printLinkedList(head);
     }
 }
