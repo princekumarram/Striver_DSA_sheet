@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 class Node {
     int data;
     Node next;
@@ -15,46 +18,88 @@ class Node {
 
 public class q4_Detect_cycle_in_LL {
 
-    public static Node CovertInLL(int arr[]) {
-
-        Node head = new Node(arr[0]);
-        Node prev = head;
-
-        for (int i = 1; i < arr.length; i++) {
-            Node temp = new Node(arr[i], null);
-            prev.next = temp;
-            prev = temp;
-        }
-        return head;
-    }
-
-    public static void printLL(Node head) {
-
-        while (head != null) {
-            System.out.print(head.data + "->");
-            head = head.next;
-        }
-        System.out.print("null");
-    }
-
-    // by using the Map method
-    public static Node DetectCycle(Node head) {
+    // function to detect a loop in a linked list
+    public static boolean detectLoop1(Node head) {
+        // initialize a pointer 'temp' at the head of linked list
 
         Node temp = head;
 
-        return head;
+        // create a map to keep track of encountered nodes
+
+        Map<Node, Integer> nodeMap = new HashMap<>();
+
+        // step2: Traverse the linked list
+        while (temp != null) {
+            // if the node is already in the map ,there is no looop
+
+            if (nodeMap.containsKey(temp)) {
+                return true;
+            }
+
+            // store the current node int the map
+            nodeMap.put(temp, 1);
+            temp = temp.next;
+        }
+
+        // step3: if the linked list is successfully traversed without a loop , return
+        // false
+        return false;
+
+    }
+
+    // Function to detect a loop in a linked list
+    // using the Tortoise and Hare Algorithm
+
+    public static boolean detectLoop2(Node head) {
+
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                return true;
+            }
+
+        }
+        return false;
 
     }
 
     public static void main(String args[]) {
-        int arr[] = { 1, 2, 3, 4, 4 };
 
-        Node head = CovertInLL(arr);
+        // create a sample linked list
+        // with a loop for testing
 
-        System.out.println("After inserting element in the Linked List");
-        printLL(head);
+        Node head = new Node(1);
+        Node second = new Node(2);
+        Node third = new Node(3);
+        Node fourth = new Node(4);
+        Node fifth = new Node(5);
 
-        DetectCycle(head);
+        head.next = second;
+        second.next = third;
+        third.next = fourth;
+        fourth.next = fifth;
+
+        // create a loop
+
+        fifth.next = third;
+
+        // check if there is a loop
+        // in the linked list
+        if (detectLoop2(head)) {
+            System.out.println("Loop detected in the Linked list.");
+
+        } else {
+            System.out.println("No loop detected in the linked list.");
+        }
+
+        // No need to explicitly free memory
+        // in java; the garbage collector handles it
 
     }
 

@@ -90,7 +90,7 @@ public class q1_Find_middle_of_array {
 
     public static void main(String[] args) {
 
-        int[] arr = { 12, 5, 6, 8, 4 };
+        int[] arr = { 12, 5, 6, 8, 4, 5, 8, 9 };
 
         Node head = convertDLL(arr);
         print(head);
