@@ -43,22 +43,25 @@ public class q8_Remove_duplicates_from_sorted_DLL {
     }
 
     public static Node RemoveDuplicates(Node head) {
-        Node temp=head;
-        while(temp!=null && temp.next!=null){
-            Node nextNode=temp.next;
-            while(nextNode!=null && nextNode.data==temp.data){
-                nextNode=nextNode.next;
-            }
-            temp.next=nextNode;
-        }
-        temp.next=nextNode;
-        if(nextNode!=null){
-            nextNode.prev=temp;
-        }
-        else{
-            temp=temp.next;
-        }
 
+        if (head == null)
+            return null;
+
+        Node temp = head;
+
+        while (temp != null && temp.next != null) {
+
+            if (temp.data == temp.next.data) {
+                Node nextNode = temp.next.next;
+                temp.next = nextNode;
+
+                if (nextNode != null)
+                    nextNode.prev = temp;
+            } else {
+                temp = temp.next;
+            }
+        }
+        return head;
     }
 
     public static void main(String[] args) {
@@ -66,8 +69,10 @@ public class q8_Remove_duplicates_from_sorted_DLL {
         int n = 7;
 
         Node head = convertIntoDLL(arr, n);
-        Node Newhead = RemoveDuplicates(head);
+
         printLL(head);
+
+        Node Newhead = RemoveDuplicates(head);
 
         System.out.println("After Removing duplicates");
         printLL(Newhead);

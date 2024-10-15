@@ -1,14 +1,10 @@
+import java.util.ArrayList;
+import java.util.List;
 
+// Definition for a doubly linked list node
 class Node {
     int data;
-    Node next;
-    Node prev;
-
-    public Node(int data, Node next, Node prev) {
-        this.data = data;
-        this.next = next;
-        this.prev = prev;
-    }
+    Node next, prev;
 
     public Node(int data) {
         this.data = data;
@@ -19,33 +15,22 @@ class Node {
 
 public class q7_FInd_all_pairs_with_given_sum_in_DLL {
 
-    public static Node convertIntoDLL(int arr[], int n) {
-
-        Node head = new Node(arr[0]);
-        Node prev = head;
-
-        for (int i = 1; i < n; i++) {
-            Node temp = new Node(arr[i], null, prev);
-            prev.next = temp;
-            prev = temp;
+    // Helper function to print the pairs
+    public static void printPairs(List<int[]> pairs) {
+        if (pairs.isEmpty()) {
+            System.out.println("No pairs found.");
+        } else {
+            for (int[] pair : pairs) {
+                System.out.println("(" + pair[0] + ", " + pair[1] + ")");
+            }
         }
-        return head;
     }
 
-    public static void printLL(Node head) {
-        System.out.print("null <- ");
-        while (head != null) {
-            System.out.print(head.data + " -> ");
-            head = head.next;
-        }
-        System.out.print("null");
-        System.out.println();
-    }
+    public static List<int[]> pairOfSum(Node head, int sum) {
 
-    public static Node PiarOfSum(Node head, int sum) {
+        List<int[]> pairs = new ArrayList<>();
 
         Node temp1 = head;
-        int ds[][] = new int[sum][sum];
 
         while (temp1 != null) {
 
@@ -53,26 +38,34 @@ public class q7_FInd_all_pairs_with_given_sum_in_DLL {
 
             while (temp2 != null) {
                 if (temp1.data + temp2.data == sum) {
-                    ds.add(temp1.data, temp2.data);
+                    // Store the pair in the list
+                    pairs.add(new int[] { temp1.data, temp2.data });
                 }
                 temp2 = temp2.next;
             }
+            temp1 = temp1.next;
 
         }
+        return pairs; // Return the list of pairs
 
     }
 
     public static void main(String[] args) {
-        int arr[] = { 1, 2, 3, 4, 9 };
-        int n = 5;
+        // Creating a doubly linked list: 1 <-> 2 <-> 3 <-> 4 <-> 5
+        Node head = new Node(1);
+        head.next = new Node(2);
+        head.next.prev = head;
+        head.next.next = new Node(3);
+        head.next.next.prev = head.next;
+        head.next.next.next = new Node(4);
+        head.next.next.next.prev = head.next.next;
+        head.next.next.next.next = new Node(5);
+        head.next.next.next.next.prev = head.next.next.next;
+
         int sum = 5;
 
-        Node head = convertIntoDLL(arr, n);
-        Node Newhead = PiarOfSum(head, sum);
-        printLL(head);
-
-        System.out.println("all occurence is");
-        printLL(Newhead);
+        List<int[]> pairs = pairOfSum(head, sum);
+        printPairs(pairs);
 
     }
 
