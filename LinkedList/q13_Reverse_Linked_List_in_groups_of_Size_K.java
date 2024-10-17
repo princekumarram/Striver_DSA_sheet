@@ -26,6 +26,69 @@ class Node {
 
 public class q13_Reverse_Linked_List_in_groups_of_Size_K {
 
+    public static Node kReverse(Node head, int k) {
+
+        Node temp = head;
+        Node prevLast = null;
+
+        while (temp != null) {
+            Node kThNode = getKthNode(temp, k);
+
+            if (kThNode == null) {
+
+                if (prevLast != null) {
+                    prevLast.next = temp;
+                }
+                // Exit the loop
+                break;
+            }
+
+            Node nextNode = kThNode.next;
+            kThNode.next = null;
+
+            reverseLinkedList(temp);
+
+            if (temp == head) {
+                head = kThNode;
+            } else {
+                prevLast.next = kThNode;
+            }
+            prevLast = temp;
+
+            temp = nextNode;
+
+        }
+        return head;
+
+    }
+
+    // getting the kthNode
+    public static Node getKthNode(Node temp, int k) {
+        k -= 1;
+
+        while (temp != null && k > 0) {
+            k--;
+            temp = temp.next;
+        }
+        return temp;
+    }
+
+    // reversing the LinkedList
+    public static Node reverseLinkedList(Node temp) {
+
+        if (temp == null || temp.next == null) {
+            return temp;
+        }
+        Node newHead = reverseLinkedList(temp.next);
+
+        Node back = temp.next;
+        back.next = temp;
+        temp.next = null;
+
+        return newHead;
+
+    }
+
     // Function to print the linked list
     static void printLinkedList(Node head) {
         Node temp = head;
