@@ -1,20 +1,20 @@
 
-public class q1_Print_1_to_N_using_Recursion {
+public class q2_Print_N_to_1_using_Recursion {
 
     static void PrintNumber(int i, int n) {
 
-        if (i >= n)
+        if (i < 1)
             return;
         System.out.print(i + " ");
 
-        PrintNumber(i + 1, n);
+        PrintNumber(i - 1, n);
 
     }
 
     public static void main(String[] args) {
 
-        int n = 3;
-        int i = 0;
+        int n = 10;
+        int i = 10;
 
         PrintNumber(i, n);
 

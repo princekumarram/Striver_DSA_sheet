@@ -1,11 +1,11 @@
 
-public class q1_Print_1_to_N_using_Recursion {
+public class q4_Print_N_time_Name_using_Recursion {
 
     static void PrintNumber(int i, int n) {
 
-        if (i >= n)
+        if (i > n)
             return;
-        System.out.print(i + " ");
+        System.out.print("Raj ");
 
         PrintNumber(i + 1, n);
 
@@ -14,7 +14,7 @@ public class q1_Print_1_to_N_using_Recursion {
     public static void main(String[] args) {
 
         int n = 3;
-        int i = 0;
+        int i = 1;
 
         PrintNumber(i, n);
 
