@@ -44,10 +44,30 @@ public class q1_fibbonacci {
         return dp[n];
     }
 
+    // space optimization
+    public static int spaceOptFib(int n) {
+
+        int prev1 = 1;
+        int prev2 = 0;
+
+        if (n == 0) {
+            return prev2;
+        }
+
+        for (int i = 2; i <= n; i++) {
+            int curr = prev1 + prev2;
+            // shipt logic
+            prev2 = prev1;
+            prev1 = curr;
+        }
+        return prev1;
+    }
+
     public static void main(String[] args) {
-        int n = 5;
+        int n = 6;
         int f[] = new int[n + 1];
         // System.out.println(fib(n, f));
-        System.out.println(fibTabulation(n));
+        // System.out.println(fibTabulation(n));
+        System.out.println(spaceOptFib(n));
     }
 }
