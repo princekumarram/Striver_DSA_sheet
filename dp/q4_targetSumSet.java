@@ -1,4 +1,4 @@
-public class targetSumSet {
+public class q4_targetSumSet {
     // tc- O(n *sum)
     public static boolean targetSumSetAns(int arr[], int sum) {
         int n = arr.length;
