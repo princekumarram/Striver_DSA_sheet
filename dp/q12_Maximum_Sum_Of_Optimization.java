@@ -33,7 +33,18 @@ public class q12_Maximum_Sum_Of_Optimization {
     // TABULTION
 
     public static int solve2Util(int n, int arr[], int dp[]) {
-        dp[0] = 0;
+        dp[0] = arr[0];
+
+        for (int i = 1; i < n; i++) {
+
+            int pick = arr[i];
+
+            if (i > 1)
+                pick += dp[i - 2];
+            int notPick = dp[i - 1];
+            dp[i] = Math.max(pick, notPick);
+        }
+        return dp[n - 1];
     }
 
     public static int solve2(int n, int arr[]) {
@@ -42,6 +53,29 @@ public class q12_Maximum_Sum_Of_Optimization {
 
         return solve2Util(n, arr, dp);
 
+    }
+
+    // ___________________________________________________________________________
+    // SPACE OPTIMIZATION
+
+    public static int solve3(int n, int arr[]) {
+
+        int prev = arr[0];
+        int prev2 = 0;
+
+        for (int i = 1; i < n; i++) {
+            int pick = arr[i];
+
+            if (i > 1)
+                pick += prev2;
+
+            int notPick = prev;
+
+            int cur_i = Math.max(pick, notPick);
+            prev2 = prev;
+            prev = cur_i;
+        }
+        return prev;
     }
 
     public static void main(String args[]) {
@@ -54,7 +88,8 @@ public class q12_Maximum_Sum_Of_Optimization {
         // Call the solve function to find the maximum possible sum.
 
         // int result = solve1(n, arr);//memoization
-        int result = solve2(n, arr); // tabulation
+        // int result = solve2(n, arr); // tabulation
+        int result = solve3(n, arr); // tabulation
 
         // Print the result.
         System.out.println(result);
