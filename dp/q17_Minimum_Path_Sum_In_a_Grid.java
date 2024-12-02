@@ -34,6 +34,74 @@ public class q17_Minimum_Path_Sum_In_a_Grid {
     // -----------------------------------------------------------------------------------------------------
 
     // Tabulation
+
+    public static int minSumPath2(int n, int m, int matrix[][]) {
+        int[][] dp = new int[n][m];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = matrix[i][j];
+                } else {
+                    int up = matrix[i][j];
+                    if (i > 0)
+                        up = up + dp[i - 1][j];
+
+                    else
+                        up = up + (int) Math.pow(10, 9);
+
+                    int left = matrix[i][j];
+
+                    if (j > 0)
+                        left = left + dp[i][j - 1];
+
+                    else
+                        left = left + (int) Math.pow(10, 9);
+                    dp[i][j] = Math.min(up, left);
+                }
+            }
+        }
+
+        return dp[n - 1][m - 1];
+    }
+
+    // Space Optimization
+
+    public static int minSumPath3(int n, int m, int matrix[][]) {
+
+        int prev[] = new int[m];
+
+        for (int i = 0; i < n; i++) {
+            int temp[] = new int[m];
+
+            for (int j = 0; j < m; j++) {
+                if (i == 0 && j == 0) {
+                    temp[j] = matrix[i][j];
+                } else {
+                    int up = matrix[i][j];
+
+                    if (i > 0)
+                        up = up + prev[j];
+
+                    else
+                        up = up + (int) Math.pow(10, 9);
+
+                    int left = matrix[i][j];
+                    if (j > 0)
+                        left = left + temp[j - 1];
+                    else
+                        left = left + (int) Math.pow(10, 9);
+
+                    temp[j] = Math.min(up, left);
+                }
+            }
+            prev = temp;
+        }
+
+        return prev[m - 1];
+
+    }
+
     public static void main(String[] args) {
         int matrix[][] = {
                 { 5, 9, 6 },
@@ -44,6 +112,8 @@ public class q17_Minimum_Path_Sum_In_a_Grid {
         int m = matrix[0].length;
         // Calculate and print the minimum sum path in the matrix
         System.out.println(minSumPath1(n, m, matrix));// Memoization
+        System.out.println(minSumPath2(n, m, matrix));// Memoization
+        System.out.println(minSumPath3(n, m, matrix));// Space Optimization
     }
 
 }
