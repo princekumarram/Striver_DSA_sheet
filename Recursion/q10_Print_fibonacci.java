@@ -9,6 +9,19 @@ public class q10_Print_fibonacci {
         int slast = getFib(n - 2);
 
         return last + slast;
+
+    }
+
+    public static void f(int n) {
+        int a = 0, b = 1;
+        System.out.print(a + " " + b + " ");
+
+        for (int i = 2; i < n; i++) {
+            int next = a + b;
+            System.out.print(next + " ");
+            a = b;
+            b = next;
+        }
     }
 
     public static void main(String[] args) {
@@ -16,6 +29,7 @@ public class q10_Print_fibonacci {
         int n = 5;
 
         System.out.println(getFib(n));
+        f(n);
     }
 
 }
