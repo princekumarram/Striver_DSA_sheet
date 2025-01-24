@@ -52,25 +52,28 @@ public class q8_Inorder_Traversal_of_Binary_Tree {
     // BY USING RECURSION METHODE -2
     public static List<Integer> InorderTraversal(TreeNode root) {
 
-        List<Integer> arr = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
 
-        preorder(root, arr);
+        Stack<TreeNode> st = new Stack<>();
 
-        return arr;
+        TreeNode current = root;
 
-    }
+        while (current != null || !st.isEmpty()) {
 
-    public static void preorder(TreeNode root, List<Integer> arr) {
+            while (current != null) {
+                st.push(current);
+                current = current.left;
+            }
 
-        if (root == null) {
-            return;
+            current = st.pop();
+
+            result.add(current.data);
+
+            current = current.right;
+
         }
+        return result;
 
-        preorder(root.left, arr);
-
-        arr.add(root.data);
-
-        preorder(root.right, arr);
     }
 
     public static void main(String args[]) {

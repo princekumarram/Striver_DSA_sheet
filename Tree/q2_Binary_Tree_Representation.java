@@ -1,8 +1,7 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
-//Definition for the binary tree node
+import java.util.*;
+import java.util.ArrayList;
+import java.util.Queue;
 
 class Node {
     int data;
@@ -16,38 +15,72 @@ class Node {
     }
 }
 
-public class q2_Binary_Tree_Representation {
+class q2_Binary_Tree_Representation {
+    public static Node createTree(List<Integer> arr) {
+        if (arr == null || arr.isEmpty())
+            return null;
 
-    public static void CreateTree(Node root0, ArrayList<Integer> v) {
-        if (root0 == null || v == null || v.isEmpty())
-            return;
-
+        Node root = new Node(arr.get(0));
         Queue<Node> queue = new LinkedList<>();
-        queue.add(root0);
-        int index = 0;
+        queue.add(root);
 
-        // Start filling the tree in level order
-        while (!queue.isEmpty() && index < v.size()) {
+        int index = 1;
+
+        while (!queue.isEmpty() && index < arr.size()) {
             Node current = queue.poll();
 
-            // Set the value for the current node
-            current.data = v.get(index++);
-
-            // Creates left and right children if there are more elements
-            if (index < v.size()) {
-                current.left = new Node(v.get(index++));
+            // Assign left child if there's an available element
+            if (index < arr.size()) {
+                current.left = new Node(arr.get(index++));
                 queue.add(current.left);
             }
 
-            if (index < v.size()) {
-                current.right = new Node(v.get(index++));
+            // Assign right child if there's an available element
+            if (index < arr.size()) {
+                current.right = new Node(arr.get(index++));
                 queue.add(current.right);
             }
         }
+        return root;
+    }
+
+    // Preorder traversal to print the tree
+    public static void printTreePreOrder(Node root) {
+        if (root == null)
+            return;
+        System.out.print(root.data + " ");
+        printTreePreOrder(root.left);
+        printTreePreOrder(root.right);
+    }
+
+    // Level order traversal to display the structure
+    public static void printTreeLevelOrder(Node root) {
+        if (root == null)
+            return;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+            System.out.print(current.data + " ");
+            if (current.left != null)
+                queue.add(current.left);
+            if (current.right != null)
+                queue.add(current.right);
+        }
+        System.out.println();
     }
 
     public static void main(String[] args) {
+        List<Integer> nodes = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
 
+        Node root = createTree(nodes);
+
+        System.out.println("Preorder traversal:");
+        printTreePreOrder(root);
+
+        System.out.println("\nLevel order traversal:");
+        printTreeLevelOrder(root);
     }
-
 }

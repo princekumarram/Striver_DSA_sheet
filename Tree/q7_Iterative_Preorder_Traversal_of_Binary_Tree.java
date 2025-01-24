@@ -52,6 +52,7 @@ public class q7_Iterative_Preorder_Traversal_of_Binary_Tree {
         for (int val : result) {
             System.out.print(val + " ");
         }
+
         System.out.println();
     }
 }
